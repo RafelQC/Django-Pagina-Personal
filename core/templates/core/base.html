@@ -9,7 +9,7 @@
     <title>{% block title %}{% endblock %} | Rafel Quetglas</title>
 
     <!-- Estilos y fuentes del template  -->
-    {% load static %}
+    {% load static %} <!-- Cargamos carpeta static donde podemos cargar todos los archivos css, boots., img, js, etc en modo estatico(offline pruebas)-->
     <link href="{% static 'core/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'core/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" %>
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -48,14 +48,13 @@
     </nav>
 
     <!-- Cabecera -->
-    <header class="masthead" style="background-image: url('{% static 'core/img/home-bg.jpg' %}')">
+    <header class="masthead" style="background-image: url('{% block background %}{% endblock %}')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>Rafel Quetglas</h1>
-              <span class="subheading">Ingeniero Técnico Industrial</span>
+              {% block headers %}{% endblock %}
             </div>
           </div>
         </div>
@@ -63,7 +62,13 @@
     </header>
 
     <!-- Content -->
+    <div class="container">
     {% block content %}{% endblock %}
+    <div>
+    <!-- aplicam l'IF si el request path ens confirma que no es la pagina home per tant "/", s'aplica el salt de linea <hr> entre contingut (que no n'hi ha a home) i footer-->
+    {% if request.path != "/" %}
+      <hr> 
+    {% endif %}
 
     <!-- Pié de página -->
     <footer>
